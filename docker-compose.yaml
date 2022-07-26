@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./requirements.txt:/app/requirements.txt
+      - ./nginxSetup:/etc/nginx/sites-enabled/default
+      - ./gunicorn:/etc/supervisor/conf.d/gunicorn.conf
+      - ./app.py:/app/app.py
+      - ./wsgi.py:/app/wsgi.py
+      - ./Makefile:/app/Makefile
+    command: make check
